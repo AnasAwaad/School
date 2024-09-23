@@ -1,6 +1,8 @@
-
 using Microsoft.EntityFrameworkCore;
+using School.Core;
+using School.Infrastructure;
 using School.Infrastructure.Data;
+using School.Service;
 
 namespace School.Api;
 
@@ -22,6 +24,16 @@ public class Program
         {
             option.UseSqlServer(builder.Configuration.GetConnectionString("dbcontext"));
         });
+
+
+        #region Dependency Injections
+
+        builder.Services
+            .AddInfrastructureDependencies()
+            .AddServiceDependencies()
+            .AddCoreDependencies();
+
+        #endregion
 
         var app = builder.Build();
 
