@@ -25,7 +25,7 @@ internal class StudentRepository : IStudentRepository
     #region Handle Functions
     public async Task<List<Student>> GetStudentListAsync()
     {
-        return await _context.Students.ToListAsync();
+        return await _context.Students.Include(s=>s.Department).ToListAsync();
     }
     #endregion
 
