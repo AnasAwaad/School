@@ -6,7 +6,9 @@ using School.Core.Features.Students.Queries.Results;
 using School.Service.Abstracts;
 
 namespace School.Core.Features.Students.Queries.Handlers;
-public class StudentHandler : ResponseHandler, IRequestHandler<GetStudentListQuery,Response<List<GetStudentListResponse>>>
+public class StudentHandler : ResponseHandler,
+                                IRequestHandler<GetStudentListQuery,Response<List<GetStudentListResponse>>>,
+                                IRequestHandler<GetStudentByIdQuery,Response<GetStudentByIdResponse>>
 {
     #region Fields
     private readonly IStudentService _studentService;
@@ -29,6 +31,17 @@ public class StudentHandler : ResponseHandler, IRequestHandler<GetStudentListQue
         var studentList= await _studentService.GetStudentListAsync();
         var studentListMapper=_mapper.Map<List<GetStudentListResponse>>(studentList);
         return Success(studentListMapper);
+    }
+
+    public async Task<Response<GetStudentByIdResponse>> Handle(GetStudentByIdQuery request, CancellationToken cancellationToken)
+    {
+        var student = await _studentService.GetStudentByIdAsync(request.Id);
+
+        if(student is null)
+            return NotFound<GetStudentByIdResponse>();
+
+        var studentMapper=_mapper.Map<GetStudentByIdResponse>(student);
+        return Success(studentMapper);
     }
     #endregion
 
