@@ -11,8 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Students\Commands\" />
-    <Folder Include="Mapping\Students\CommandMapping\" />
+    <Folder Include="Features\Students\Commands\Results\" />
   </ItemGroup>
 
   <ItemGroup>

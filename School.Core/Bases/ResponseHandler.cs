@@ -46,6 +46,16 @@ public class ResponseHandler
         };
     }
 
+    public Response<T> UnprocessableEntity<T>(string? message = null)
+    {
+        return new Response<T>
+        {
+            StatusCode = System.Net.HttpStatusCode.UnprocessableEntity,
+            Succeeded = false,
+            Message = message is null ? "Unprocessable Entity" : message
+        };
+    }
+
     public Response<T> NotFound<T>(string? message = null)
     {
         return new Response<T>

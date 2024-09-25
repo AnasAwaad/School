@@ -10,5 +10,6 @@ public static class Router
         public const string Prefix = $"{rule}/Student";
         public const string List = $"{Prefix}/List";
         public const string GetById = Prefix+"/{id}";
+        public const string Create = Prefix+"/Create";
     }
 }
