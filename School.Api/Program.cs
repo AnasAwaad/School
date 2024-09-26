@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using School.Core;
+using School.Core.MiddleWare;
 using School.Infrastructure;
 using School.Infrastructure.Data;
 using School.Service;
@@ -43,6 +44,9 @@ public class Program
             app.UseSwagger();
             app.UseSwaggerUI();
         }
+
+        // Global Exception Handler
+        app.UseMiddleware<ErrorHandlerMiddleware>();
 
         app.UseHttpsRedirection();
 

@@ -1,11 +1,9 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using School.Api.Base;
 using School.Core.Features.Students.Commands.Models;
 using School.Core.Features.Students.Queries.Models;
 using School.Data.AppMetaData;
-using School.Data.Entities;
 
 namespace School.Api.Controllers;
 [ApiController]

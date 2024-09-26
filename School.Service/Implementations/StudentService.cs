@@ -36,15 +36,15 @@ public class StudentService : IStudentService
 
     public async Task<string> AddStudentAsync(Student student)
     {
-        // check if the name is exists or not
-        var isExistStudent = _studentRepository.GetTableNoTracking().Any(s => s.Name == student.Name);
-
-        if (isExistStudent)
-            return "Exists";
-
         // add new student
         await _studentRepository.AddAsync(student);
         return "Success";
+    }
+
+    public bool IsStudentNameExistAsync(string name)
+    {
+        // check if the name is exists or not
+        return _studentRepository.GetTableNoTracking().Any(s => s.Name == name);
     }
     #endregion
 }
