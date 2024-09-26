@@ -3,7 +3,7 @@ public class ResponseHandler
 {
     public ResponseHandler()
     {
-        
+
     }
     public Response<T> Delete<T>()
     {
@@ -15,7 +15,7 @@ public class ResponseHandler
         };
     }
 
-    public Response<T> Success<T>(T entity,object? meta=null)
+    public Response<T> Success<T>(T entity, object? meta = null)
     {
         return new Response<T>
         {
@@ -36,7 +36,7 @@ public class ResponseHandler
         };
     }
 
-    public Response<T> BadRequest<T>(string? message=null)
+    public Response<T> BadRequest<T>(string? message = null)
     {
         return new Response<T>
         {
@@ -66,7 +66,7 @@ public class ResponseHandler
         };
     }
 
-    public Response<T> Created<T>(T entity,object? meta = null)
+    public Response<T> Created<T>(T entity, object? meta = null)
     {
         return new Response<T>
         {

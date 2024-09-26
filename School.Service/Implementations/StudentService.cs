@@ -46,5 +46,17 @@ public class StudentService : IStudentService
         // check if the name is exists or not
         return _studentRepository.GetTableNoTracking().Any(s => s.Name == name);
     }
+
+    public bool IsStudentNameExistAsync(string name, int id)
+    {
+        // check if the name is exists or not and execlude same person
+        return _studentRepository.GetTableNoTracking().Any(s => s.StudID != id && s.Name == name);
+    }
+
+    public async Task<string> EditStudentAsync(Student student)
+    {
+        await _studentRepository.UpdateAsync(student);
+        return "Success";
+    }
     #endregion
 }

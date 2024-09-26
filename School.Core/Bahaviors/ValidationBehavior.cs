@@ -31,7 +31,7 @@ public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TReques
             // And finally, we throw this as FluentValidation.ValidationException and pass the errored out messages
             if (failures.Any())
             {
-                var message = failures.Select(x => x.PropertyName + ": " + x.ErrorMessage).FirstOrDefault();
+                var message = failures.Select(x => x.ErrorMessage).FirstOrDefault();
 
                 throw new ValidationException(message);
 

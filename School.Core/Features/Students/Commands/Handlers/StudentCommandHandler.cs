@@ -4,15 +4,11 @@ using School.Core.Bases;
 using School.Core.Features.Students.Commands.Models;
 using School.Data.Entities;
 using School.Service.Abstracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace School.Core.Features.Students.Commands.Handlers;
 public class StudentCommandHandler : ResponseHandler,
-                                    IRequestHandler<AddStudentCommand, Response<string>>
+                                    IRequestHandler<AddStudentCommand, Response<string>>,
+                                    IRequestHandler<EditStudentCommand, Response<string>>
 {
     #region Fields
     private readonly IStudentService _studentService;
@@ -31,14 +27,29 @@ public class StudentCommandHandler : ResponseHandler,
     #region Handle Functions
     public async Task<Response<string>> Handle(AddStudentCommand request, CancellationToken cancellationToken)
     {
-        var studentMapped=_mapper.Map<Student>(request);
-        var studentResult =await _studentService.AddStudentAsync(studentMapped);
+        var studentMapped = _mapper.Map<Student>(request);
+        var studentResult = await _studentService.AddStudentAsync(studentMapped);
 
-        if (studentResult == "Exists")
-            return UnprocessableEntity<string>("Student name is exists");
         if (studentResult == "Success")
             return Created("Added successfully");
 
+        return BadRequest<string>();
+    }
+
+    public async Task<Response<string>> Handle(EditStudentCommand request, CancellationToken cancellationToken)
+    {
+        // check if the student id is exists or not
+        var student = await _studentService.GetStudentByIdAsync(request.Id);
+        // if not exist return not found
+        if (student is null)
+            return NotFound<string>();
+        // mapping between request and student
+        var studentMapped = _mapper.Map<Student>(request);
+        // call service for edit student
+        var studentResult = await _studentService.EditStudentAsync(studentMapped);
+        // return response
+        if (studentResult == "Success")
+            return Success($"Student with Id {studentMapped.StudID} Updated Successfully");
         return BadRequest<string>();
     }
     #endregion
