@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using School.Data.Entities;
+using School.Data.Helper;
 using School.Infrastructure.Abstracts;
 using School.Service.Abstracts;
 
@@ -75,13 +76,35 @@ public class StudentService : IStudentService
         return _studentRepository.GetTableNoTracking().Include(s => s.Department);
     }
 
-    public IQueryable<Student> GetFilteredStudentsAsQurable(string? search)
+    public IQueryable<Student> GetFilteredStudentsAsQurable(StudentOrdering? orderBy, string? search)
     {
         var query = GetStudentsAsQurable();
         if (!string.IsNullOrEmpty(search))
         {
             query = query.Where(s => s.Name.Contains(search) || s.Address.Contains(search));
         }
+
+        if (orderBy is not null)
+        {
+            switch (orderBy)
+            {
+                case StudentOrdering.StudentId:
+                    query = query.OrderBy(x => x.StudID);
+                    break;
+                case StudentOrdering.Name:
+                    query = query.OrderBy(x => x.Name);
+                    break;
+                case StudentOrdering.Address:
+                    query = query.OrderBy(x => x.Address);
+                    break;
+                case StudentOrdering.DepartmentName:
+                    query = query.OrderBy(x => x.Department!.DName);
+                    break;
+                default:
+                    break;
+            }
+        }
+
         return query;
     }
     #endregion

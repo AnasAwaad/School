@@ -52,7 +52,7 @@ public class StudentHandler : ResponseHandler,
     {
         Expression<Func<Student, GetStudentPaginatedListResponse>> expression = student => new GetStudentPaginatedListResponse(student);
 
-        var query = _studentService.GetFilteredStudentsAsQurable(request.Search);
+        var query = _studentService.GetFilteredStudentsAsQurable(request.OrderBy, request.Search);
 
         var paginatedResult = await query
             .Select(expression)
