@@ -4,6 +4,8 @@ namespace School.Service.Abstracts;
 public interface IStudentService
 {
     Task<List<Student>> GetStudentListAsync();
+    IQueryable<Student> GetStudentsAsQurable();
+    IQueryable<Student> GetFilteredStudentsAsQurable(string? search);
     Task<Student> GetStudentWithDepartmentAsync(int id);
     Task<Student> GetStudentByIdAsync(int id);
     Task<string> AddStudentAsync(Student student);

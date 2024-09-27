@@ -69,5 +69,20 @@ public class StudentService : IStudentService
     {
         return await _studentRepository.GetByIdAsync(id);
     }
+
+    public IQueryable<Student> GetStudentsAsQurable()
+    {
+        return _studentRepository.GetTableNoTracking().Include(s => s.Department);
+    }
+
+    public IQueryable<Student> GetFilteredStudentsAsQurable(string? search)
+    {
+        var query = GetStudentsAsQurable();
+        if (!string.IsNullOrEmpty(search))
+        {
+            query = query.Where(s => s.Name.Contains(search) || s.Address.Contains(search));
+        }
+        return query;
+    }
     #endregion
 }

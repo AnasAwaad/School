@@ -29,6 +29,12 @@ public class StudentController : AppControllerBase
         var response = await _mediator.Send(new GetStudentByIdQuery(id));
         return NewResult(response);
     }
+    [HttpGet(Router.StudentRouting.Paginated)]
+    public async Task<IActionResult> GetStudentsPaginated([FromQuery] GetStudentPaginatedListQuery query)
+    {
+        var response = await _mediator.Send(query);
+        return Ok(response);
+    }
 
     [HttpPost(Router.StudentRouting.Create)]
     public async Task<IActionResult> CreateStudent(AddStudentCommand studentCommand)
