@@ -8,7 +8,8 @@ using School.Service.Abstracts;
 namespace School.Core.Features.Students.Commands.Handlers;
 public class StudentCommandHandler : ResponseHandler,
                                     IRequestHandler<AddStudentCommand, Response<string>>,
-                                    IRequestHandler<EditStudentCommand, Response<string>>
+                                    IRequestHandler<EditStudentCommand, Response<string>>,
+                                    IRequestHandler<DeleteStudentCommand, Response<string>>
 {
     #region Fields
     private readonly IStudentService _studentService;
@@ -42,14 +43,29 @@ public class StudentCommandHandler : ResponseHandler,
         var student = await _studentService.GetStudentByIdAsync(request.Id);
         // if not exist return not found
         if (student is null)
-            return NotFound<string>();
+            return NotFound<string>("Student is Not Found");
         // mapping between request and student
-        var studentMapped = _mapper.Map<Student>(request);
+        student = _mapper.Map(request, student);
         // call service for edit student
-        var studentResult = await _studentService.EditStudentAsync(studentMapped);
+        var studentResult = await _studentService.EditStudentAsync(student);
         // return response
         if (studentResult == "Success")
-            return Success($"Student with Id {studentMapped.StudID} Updated Successfully");
+            return Success($"Student with Id {student.StudID} Updated Successfully");
+        return BadRequest<string>();
+    }
+
+    public async Task<Response<string>> Handle(DeleteStudentCommand request, CancellationToken cancellationToken)
+    {
+        // check if the student id is exists
+        var student = await _studentService.GetStudentByIdAsync(request.Id);
+        // return not found if not exist
+        if (student is null)
+            return NotFound<string>("Student is Not Found");
+        // call service to delete student
+        var studentResult = await _studentService.DeleteStudentAsync(student);
+        // return response
+        if (studentResult == "Success")
+            return Delete<string>();
         return BadRequest<string>();
     }
     #endregion

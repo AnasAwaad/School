@@ -12,5 +12,6 @@ public static class Router
         public const string GetById = Prefix + "/{id}";
         public const string Create = Prefix + "/Create";
         public const string Edit = Prefix + "/Edit";
+        public const string Delete = Prefix + "/{id}";
     }
 }

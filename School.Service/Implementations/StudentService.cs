@@ -25,7 +25,7 @@ public class StudentService : IStudentService
         return await _studentRepository.GetStudentListAsync();
     }
 
-    public async Task<Student> GetStudentByIdAsync(int id)
+    public async Task<Student> GetStudentWithDepartmentAsync(int id)
     {
         var student = await _studentRepository.GetTableNoTracking()
             .Include(s => s.Department)
@@ -57,6 +57,17 @@ public class StudentService : IStudentService
     {
         await _studentRepository.UpdateAsync(student);
         return "Success";
+    }
+
+    public async Task<string> DeleteStudentAsync(Student student)
+    {
+        await _studentRepository.DeleteAsync(student);
+        return "Success";
+    }
+
+    public async Task<Student> GetStudentByIdAsync(int id)
+    {
+        return await _studentRepository.GetByIdAsync(id);
     }
     #endregion
 }
