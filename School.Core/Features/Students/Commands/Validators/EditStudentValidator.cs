@@ -1,5 +1,7 @@
 ﻿using FluentValidation;
+using Microsoft.Extensions.Localization;
 using School.Core.Features.Students.Commands.Models;
+using School.Core.Resources;
 using School.Service.Abstracts;
 
 namespace School.Core.Features.Students.Commands.Validators;
@@ -7,11 +9,13 @@ public class EditStudentValidator : AbstractValidator<EditStudentCommand>
 {
     #region Fields
     private readonly IStudentService _studentService;
+    private readonly IStringLocalizer<SharedResources> _localizer;
     #endregion
     #region Constructors
-    public EditStudentValidator(IStudentService studentService)
+    public EditStudentValidator(IStudentService studentService, IStringLocalizer<SharedResources> localizer)
     {
         _studentService = studentService;
+        _localizer = localizer;
 
         ApplyValidationRules();
         ApplyCustomeValidationRules();
@@ -23,14 +27,14 @@ public class EditStudentValidator : AbstractValidator<EditStudentCommand>
     public void ApplyValidationRules()
     {
         RuleFor(x => x.Name)
-            .NotEmpty().WithMessage("{PropertyName} must not be empty")
-            .NotNull().WithMessage("{PropertyName} must not be null")
-            .MaximumLength(20).WithMessage("{PropertyName} must be in {MaxLength} chars");
+            .NotEmpty().WithMessage(_localizer[SharedResourcesKeys.NotEmpty])
+            .NotNull().WithMessage(_localizer[SharedResourcesKeys.Required])
+            .MaximumLength(20).WithMessage(_localizer[SharedResourcesKeys.MaxLength20]);
 
         RuleFor(x => x.Address)
-            .NotEmpty().WithMessage("{PropertyName} must not be empty")
-            .NotNull().WithMessage("{PropertyName} must not be null")
-            .MaximumLength(20).WithMessage("{PropertyName} must be in {MaxLength} chars");
+            .NotEmpty().WithMessage(_localizer[SharedResourcesKeys.NotEmpty])
+            .NotNull().WithMessage(_localizer[SharedResourcesKeys.Required])
+            .MaximumLength(20).WithMessage(_localizer[SharedResourcesKeys.MaxLength20]);
 
     }
 
@@ -38,7 +42,7 @@ public class EditStudentValidator : AbstractValidator<EditStudentCommand>
     {
         RuleFor(x => x.Name)
             .Must((model, CancellationToken) => !_studentService.IsStudentNameExistAsync(model.Name, model.Id))
-            .WithMessage("{PropertyName} is exists");
+            .WithMessage(_localizer[SharedResourcesKeys.Exists]);
 
     }
     #endregion

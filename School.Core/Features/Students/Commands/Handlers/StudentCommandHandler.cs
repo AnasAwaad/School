@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.Extensions.Localization;
 using School.Core.Bases;
 using School.Core.Features.Students.Commands.Models;
+using School.Core.Resources;
 using School.Data.Entities;
 using School.Service.Abstracts;
 
@@ -14,14 +16,15 @@ public class StudentCommandHandler : ResponseHandler,
     #region Fields
     private readonly IStudentService _studentService;
     private readonly IMapper _mapper;
-
+    private readonly IStringLocalizer<SharedResources> _localizer;
     #endregion
 
     #region Constructor
-    public StudentCommandHandler(IStudentService studentService, IMapper mapper)
+    public StudentCommandHandler(IStudentService studentService, IMapper mapper, IStringLocalizer<SharedResources> localizer) : base(localizer)
     {
         _studentService = studentService;
         _mapper = mapper;
+        _localizer = localizer;
     }
     #endregion
 
@@ -32,7 +35,7 @@ public class StudentCommandHandler : ResponseHandler,
         var studentResult = await _studentService.AddStudentAsync(studentMapped);
 
         if (studentResult == "Success")
-            return Created("Added successfully");
+            return Created("");
 
         return BadRequest<string>();
     }
@@ -43,14 +46,14 @@ public class StudentCommandHandler : ResponseHandler,
         var student = await _studentService.GetStudentByIdAsync(request.Id);
         // if not exist return not found
         if (student is null)
-            return NotFound<string>("Student is Not Found");
+            return NotFound<string>();
         // mapping between request and student
         student = _mapper.Map(request, student);
         // call service for edit student
         var studentResult = await _studentService.EditStudentAsync(student);
         // return response
         if (studentResult == "Success")
-            return Success($"Student with Id {student.StudID} Updated Successfully");
+            return Success("", message: _localizer[SharedResourcesKeys.Updated]);
         return BadRequest<string>();
     }
 
@@ -60,7 +63,7 @@ public class StudentCommandHandler : ResponseHandler,
         var student = await _studentService.GetStudentByIdAsync(request.Id);
         // return not found if not exist
         if (student is null)
-            return NotFound<string>("Student is Not Found");
+            return NotFound<string>();
         // call service to delete student
         var studentResult = await _studentService.DeleteStudentAsync(student);
         // return response
