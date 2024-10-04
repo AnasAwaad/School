@@ -45,13 +45,13 @@ public class StudentService : IStudentService
     public bool IsStudentNameExistAsync(string name)
     {
         // check if the name is exists or not
-        return _studentRepository.GetTableNoTracking().Any(s => s.Name == name);
+        return _studentRepository.GetTableNoTracking().Any(s => s.NameEn == name);
     }
 
     public bool IsStudentNameExistAsync(string name, int id)
     {
         // check if the name is exists or not and execlude same person
-        return _studentRepository.GetTableNoTracking().Any(s => s.StudID != id && s.Name == name);
+        return _studentRepository.GetTableNoTracking().Any(s => s.StudID != id && s.NameEn == name);
     }
 
     public async Task<string> EditStudentAsync(Student student)
@@ -81,7 +81,7 @@ public class StudentService : IStudentService
         var query = GetStudentsAsQurable();
         if (!string.IsNullOrEmpty(search))
         {
-            query = query.Where(s => s.Name.Contains(search) || s.Address.Contains(search));
+            query = query.Where(s => s.NameEn.Contains(search) || s.Address.Contains(search));
         }
 
         if (orderBy is not null)
@@ -92,13 +92,13 @@ public class StudentService : IStudentService
                     query = query.OrderBy(x => x.StudID);
                     break;
                 case StudentOrdering.Name:
-                    query = query.OrderBy(x => x.Name);
+                    query = query.OrderBy(x => x.NameEn);
                     break;
                 case StudentOrdering.Address:
                     query = query.OrderBy(x => x.Address);
                     break;
                 case StudentOrdering.DepartmentName:
-                    query = query.OrderBy(x => x.Department!.DName);
+                    query = query.OrderBy(x => x.Department!.DNameEn);
                     break;
                 default:
                     break;

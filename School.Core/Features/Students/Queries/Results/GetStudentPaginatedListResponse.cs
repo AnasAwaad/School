@@ -5,10 +5,10 @@ public class GetStudentPaginatedListResponse
 {
     public GetStudentPaginatedListResponse(Student student)
     {
-        Name = student.Name;
+        Name = student.NameEn;
         StudentId = student.StudID;
         Address = student.Address;
-        DepartmentName = student.Department!.DName;
+        DepartmentName = student.Department!.DNameEn;
     }
     public int StudentId { get; set; }
     public string Name { get; set; } = null!;

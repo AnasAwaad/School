@@ -1,22 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using School.Data.Common;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace School.Data.Entities;
-public class Student
+public class Student : LocalizableEntity
 {
     public Student()
     {
-        StudentSubjects=new HashSet<StudentSubject>();
+        StudentSubjects = new HashSet<StudentSubject>();
     }
     [Key]
     public int StudID { get; set; }
     [StringLength(200)]
-    public string Name { get; set; } = null!;
+    public string NameEn { get; set; } = null!;
+    [StringLength(200)]
+    public string NameAr { get; set; } = null!;
     [StringLength(500)]
     public string Address { get; set; } = null!;
     [StringLength(500)]
