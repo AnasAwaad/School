@@ -14,4 +14,5 @@ public static class SharedResourcesKeys
     public const string MaxLength20 = "MaxLength20";
     public const string Exists = "Exists";
     public const string Address = "Address";
+    public const string Success = "Success";
 }

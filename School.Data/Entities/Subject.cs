@@ -1,7 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using School.Data.Common;
+using System.ComponentModel.DataAnnotations;
 
 namespace School.Data.Entities;
-public class Subject
+public class Subject : LocalizableEntity
 {
     public Subject()
     {

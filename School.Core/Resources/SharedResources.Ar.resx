@@ -147,6 +147,9 @@
   <data name="Required" xml:space="preserve">
     <value>هذا الحقل مطلوب </value>
   </data>
+  <data name="Success" xml:space="preserve">
+    <value>تم بنجاح</value>
+  </data>
   <data name="Unauthorize" xml:space="preserve">
     <value>لا تمتلك صلاحية للوصول لتلك المصادر</value>
   </data>

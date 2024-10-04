@@ -27,7 +27,7 @@ public class ResponseHandler
             Meta = meta,
             StatusCode = System.Net.HttpStatusCode.OK,
             Succeeded = true,
-            Message = message ?? "Success"
+            Message = message ?? _localizer[SharedResourcesKeys.Success]
         };
     }
 
