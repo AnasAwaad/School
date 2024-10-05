@@ -14,14 +14,14 @@ public partial class Department : LocalizableEntity
     [Key]
     public int DID { get; set; }
     [StringLength(500)]
-    public string DNameEn { get; set; } = null!;
+    public string? DNameEn { get; set; }
     [StringLength(500)]
-    public string DNameAr { get; set; } = null!;
+    public string? DNameAr { get; set; }
 
 
 
     [InverseProperty("DepartmentManage")]
-    public Instructor InstructorManage { get; set; }
+    public Instructor? InstructorManage { get; set; }
 
 
     public ICollection<Student> Students { get; set; }

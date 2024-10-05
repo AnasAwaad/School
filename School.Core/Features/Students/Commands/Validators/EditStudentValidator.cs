@@ -26,7 +26,12 @@ public class EditStudentValidator : AbstractValidator<EditStudentCommand>
     #region Handle Functions
     public void ApplyValidationRules()
     {
-        RuleFor(x => x.Name)
+        RuleFor(x => x.NameEn)
+            .NotEmpty().WithMessage(_localizer[SharedResourcesKeys.NotEmpty])
+            .NotNull().WithMessage(_localizer[SharedResourcesKeys.Required])
+            .MaximumLength(20).WithMessage(_localizer[SharedResourcesKeys.MaxLength20]);
+
+        RuleFor(x => x.NameAr)
             .NotEmpty().WithMessage(_localizer[SharedResourcesKeys.NotEmpty])
             .NotNull().WithMessage(_localizer[SharedResourcesKeys.Required])
             .MaximumLength(20).WithMessage(_localizer[SharedResourcesKeys.MaxLength20]);
@@ -40,10 +45,13 @@ public class EditStudentValidator : AbstractValidator<EditStudentCommand>
 
     public void ApplyCustomeValidationRules()
     {
-        RuleFor(x => x.Name)
-            .Must((model, CancellationToken) => !_studentService.IsStudentNameExistAsync(model.Name, model.Id))
+        RuleFor(x => x.NameEn)
+            .Must((model, CancellationToken) => !_studentService.IsStudentNameExistAsync(model.NameEn, model.Id))
             .WithMessage(_localizer[SharedResourcesKeys.Exists]);
 
+        RuleFor(x => x.NameAr)
+            .Must((model, CancellationToken) => !_studentService.IsStudentNameExistAsync(model.NameAr, model.Id))
+            .WithMessage(_localizer[SharedResourcesKeys.Exists]);
     }
     #endregion
 }

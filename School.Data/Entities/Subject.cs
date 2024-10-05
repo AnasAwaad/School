@@ -15,11 +15,11 @@ public class Subject : LocalizableEntity
     public int SubID { get; set; }
 
     [StringLength(500)]
-    public string SubjectNameEn { get; set; } = null!;
+    public string? SubjectNameEn { get; set; }
 
     [StringLength(500)]
-    public string SubjectNameAr { get; set; } = null!;
-    public DateTime Period { get; set; }
+    public string? SubjectNameAr { get; set; }
+    public int? Period { get; set; }
     public ICollection<StudentSubject> StudentsSubjects { get; set; }
     public ICollection<DepartmetSubject> DepartmetsSubjects { get; set; }
     [InverseProperty("Subject")]

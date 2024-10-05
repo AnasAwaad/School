@@ -5,6 +5,7 @@ public class StudentSubject
 {
     public int StudID { get; set; }
     public int SubID { get; set; }
+    public decimal? Degree { get; set; }
 
     [ForeignKey("StudID")]
     public Student? Student { get; set; }
