@@ -1,5 +1,6 @@
 ﻿using School.Data.Common;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace School.Data.Entities;
 public class Subject : LocalizableEntity
@@ -8,6 +9,7 @@ public class Subject : LocalizableEntity
     {
         StudentsSubjects = new HashSet<StudentSubject>();
         DepartmetsSubjects = new HashSet<DepartmetSubject>();
+        InstructorSubjects = new HashSet<InstructorSubject>();
     }
     [Key]
     public int SubID { get; set; }
@@ -20,4 +22,6 @@ public class Subject : LocalizableEntity
     public DateTime Period { get; set; }
     public ICollection<StudentSubject> StudentsSubjects { get; set; }
     public ICollection<DepartmetSubject> DepartmetsSubjects { get; set; }
+    [InverseProperty("Subject")]
+    public ICollection<InstructorSubject> InstructorSubjects { get; set; }
 }
