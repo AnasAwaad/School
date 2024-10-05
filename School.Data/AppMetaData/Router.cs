@@ -15,4 +15,10 @@ public static class Router
         public const string Delete = Prefix + "/{id}";
         public const string Paginated = Prefix + "/Paginated";
     }
+
+    public static class DepartmentRouting
+    {
+        public const string Prefix = $"{rule}/Department";
+        public const string GetById = Prefix + "/{id}";
+    }
 }

@@ -1,7 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using School.Data.Common;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace School.Data.Entities;
-public class DepartmetSubject
+public class DepartmetSubject : LocalizableEntity
 {
     public int DID { get; set; }
     public int SubID { get; set; }

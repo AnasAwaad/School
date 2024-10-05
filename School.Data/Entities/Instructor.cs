@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using School.Data.Common;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace School.Data.Entities;
-public class Instructor
+public class Instructor : LocalizableEntity
 {
     public Instructor()
     {

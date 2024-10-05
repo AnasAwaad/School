@@ -46,7 +46,7 @@ public class StudentHandler : ResponseHandler,
         var student = await _studentService.GetStudentWithDepartmentAsync(request.Id);
 
         if (student is null)
-            return NotFound<GetStudentByIdResponse>(_localizer[SharedResourcesKeys.NotFound]);
+            return NotFound<GetStudentByIdResponse>();
 
         var studentMapper = _mapper.Map<GetStudentByIdResponse>(student);
         return Success(studentMapper);

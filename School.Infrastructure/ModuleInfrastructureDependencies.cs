@@ -10,6 +10,8 @@ public static class ModuleInfrastructureDependencies
     {
         // Configuration of Custome Repository
         services.AddTransient<IStudentRepository, StudentRepository>();
+        services.AddTransient<IDepartmentRepository, DepartmentRepository>();
+
         // Configuration of Generic Repository
         services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         return services;
