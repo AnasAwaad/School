@@ -8,6 +8,7 @@ public interface IStudentService
     IQueryable<Student> GetStudentsAsQurable();
     IQueryable<Student> GetFilteredStudentsAsQurable(StudentOrdering? orderBy, string? search);
     Task<Student> GetStudentWithDepartmentAsync(int id);
+    IQueryable<Student> GetStudentsByDepartmentIdAsQurable(int departmentId);
     Task<Student> GetStudentByIdAsync(int id);
     Task<string> AddStudentAsync(Student student);
     Task<string> EditStudentAsync(Student student);

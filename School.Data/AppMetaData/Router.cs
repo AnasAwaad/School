@@ -19,6 +19,6 @@ public static class Router
     public static class DepartmentRouting
     {
         public const string Prefix = $"{rule}/Department";
-        public const string GetById = Prefix + "/{id}";
+        public const string GetById = Prefix;
     }
 }

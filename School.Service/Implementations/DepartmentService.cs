@@ -30,7 +30,6 @@ public class DepartmentService : IDepartmentService
                 .ThenInclude(s => s.Subject)
             .Include(d => d.InstructorManage)
             .Include(d => d.Instructors)
-            .Include(d => d.Students)
             .FirstOrDefaultAsync();
 
         return department;

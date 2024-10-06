@@ -17,9 +17,9 @@ public class PaginatedResult<T>
         Messages = messages;
     }
 
-    public static PaginatedResult<T> Success(List<T> data, int count, int page, int pageSize)
+    public static PaginatedResult<T> Success(List<T> data, int count, int page, int pageSize, List<string>? messages = null)
     {
-        return new PaginatedResult<T>(true, data, null, count, page, pageSize);
+        return new PaginatedResult<T>(true, data, messages, count, page, pageSize);
     }
 
     public List<T>? Data { get; set; }

@@ -107,5 +107,13 @@ public class StudentService : IStudentService
 
         return query;
     }
+
+    public IQueryable<Student> GetStudentsByDepartmentIdAsQurable(int departmentId)
+    {
+        return _studentRepository
+            .GetTableNoTracking()
+            .Where(s => s.DID == departmentId);
+
+    }
     #endregion
 }

@@ -5,10 +5,7 @@ using School.Core.Features.Departments.Queries.Results;
 namespace School.Core.Features.Departments.Queries.Models;
 public class GetDepartmentByIdQuery : IRequest<Response<GetDepartmentByIdResponse>>
 {
-    public GetDepartmentByIdQuery(int id)
-    {
-        Id = id;
-    }
-
     public int Id { get; set; }
+    public int StudentPageNumber { get; set; }
+    public int StudentPageSize { get; set; }
 }

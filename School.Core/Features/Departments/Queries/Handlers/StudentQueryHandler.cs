@@ -5,6 +5,7 @@ using School.Core.Bases;
 using School.Core.Features.Departments.Queries.Models;
 using School.Core.Features.Departments.Queries.Results;
 using School.Core.Resources;
+using School.Core.Wrappers;
 using School.Service.Abstracts;
 
 namespace School.Core.Features.Departments.Queries.Handlers;
@@ -14,15 +15,17 @@ internal class StudentQueryHandler : ResponseHandler,
     #region Fields
     private readonly IStringLocalizer<SharedResources> _localizer;
     private readonly IDepartmentService _departmentService;
+    private readonly IStudentService _studentService;
     private readonly IMapper _mapper;
     #endregion
 
     #region Constructor
-    public StudentQueryHandler(IStringLocalizer<SharedResources> localizer, IDepartmentService departmentService, IMapper mapper) : base(localizer)
+    public StudentQueryHandler(IStringLocalizer<SharedResources> localizer, IDepartmentService departmentService, IMapper mapper, IStudentService studentService) : base(localizer)
     {
         _localizer = localizer;
         _departmentService = departmentService;
         _mapper = mapper;
+        _studentService = studentService;
     }
     #endregion
 
@@ -36,6 +39,15 @@ internal class StudentQueryHandler : ResponseHandler,
             return NotFound<GetDepartmentByIdResponse>();
         //if exists make mapping between request and response
         var departmentMapper = _mapper.Map<GetDepartmentByIdResponse>(department);
+
+
+        var studentsQurable = _studentService.GetStudentsByDepartmentIdAsQurable(request.Id);
+
+        var paginatedStudents = await studentsQurable
+            .Select(s => new StudentResponse(s.StudID, s.GetLocalized(s.NameEn, s.NameAr)))
+            .ToPaginatedListAsync(request.StudentPageNumber, request.StudentPageSize, messages: new List<string> { _localizer[SharedResourcesKeys.Success] });
+
+        departmentMapper.StudentList = paginatedStudents;
 
         // return response
         return Success(departmentMapper);

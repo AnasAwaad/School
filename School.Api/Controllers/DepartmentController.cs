@@ -22,9 +22,9 @@ public class DepartmentController : AppControllerBase
 
     #region Handle Functions
     [HttpGet(Router.DepartmentRouting.GetById)]
-    public async Task<IActionResult> GetDepartmentById(int id)
+    public async Task<IActionResult> GetDepartmentById([FromQuery] GetDepartmentByIdQuery query)
     {
-        var response = await _mediator.Send(new GetDepartmentByIdQuery(id));
+        var response = await _mediator.Send(query);
         return NewResult(response);
     }
     #endregion
