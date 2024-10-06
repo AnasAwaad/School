@@ -15,4 +15,5 @@ public static class SharedResourcesKeys
     public const string Exists = "Exists";
     public const string Address = "Address";
     public const string Success = "Success";
+    public const string IsNotExists = "IsNotExists";
 }

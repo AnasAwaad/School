@@ -46,11 +46,11 @@ public class EditStudentValidator : AbstractValidator<EditStudentCommand>
     public void ApplyCustomeValidationRules()
     {
         RuleFor(x => x.NameEn)
-            .Must((model, CancellationToken) => !_studentService.IsStudentNameExistAsync(model.NameEn, model.Id))
+            .MustAsync(async (model, nameEn, CancellationToken) => !await _studentService.IsStudentNameExistAsync(nameEn, model.Id))
             .WithMessage(_localizer[SharedResourcesKeys.Exists]);
 
         RuleFor(x => x.NameAr)
-            .Must((model, CancellationToken) => !_studentService.IsStudentNameExistAsync(model.NameAr, model.Id))
+            .MustAsync(async (model, nameAr, CancellationToken) => !await _studentService.IsStudentNameExistAsync(nameAr, model.Id))
             .WithMessage(_localizer[SharedResourcesKeys.Exists]);
     }
     #endregion

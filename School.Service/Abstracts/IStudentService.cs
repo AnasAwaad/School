@@ -13,6 +13,6 @@ public interface IStudentService
     Task<string> AddStudentAsync(Student student);
     Task<string> EditStudentAsync(Student student);
     Task<string> DeleteStudentAsync(Student student);
-    bool IsStudentNameExistAsync(string name);
-    bool IsStudentNameExistAsync(string name, int id);
+    Task<bool> IsStudentNameExistAsync(string name);
+    Task<bool> IsStudentNameExistAsync(string name, int id);
 }

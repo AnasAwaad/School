@@ -42,16 +42,16 @@ public class StudentService : IStudentService
         return "Success";
     }
 
-    public bool IsStudentNameExistAsync(string name)
+    public async Task<bool> IsStudentNameExistAsync(string name)
     {
         // check if the name is exists or not
-        return _studentRepository.GetTableNoTracking().Any(s => s.NameEn == name);
+        return await _studentRepository.GetTableNoTracking().AnyAsync(s => s.NameEn == name);
     }
 
-    public bool IsStudentNameExistAsync(string name, int id)
+    public async Task<bool> IsStudentNameExistAsync(string name, int id)
     {
         // check if the name is exists or not and execlude same person
-        return _studentRepository.GetTableNoTracking().Any(s => s.StudID != id && s.NameEn == name);
+        return await _studentRepository.GetTableNoTracking().AnyAsync(s => s.StudID != id && s.NameEn == name);
     }
 
     public async Task<string> EditStudentAsync(Student student)

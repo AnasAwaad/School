@@ -132,6 +132,9 @@
   <data name="Exists" xml:space="preserve">
     <value>القيمة موجودة مسبقا</value>
   </data>
+  <data name="IsNotExists" xml:space="preserve">
+    <value>غير موجود</value>
+  </data>
   <data name="MaxLength20" xml:space="preserve">
     <value>يجب ألا يزيد طزل النص عن 20 حرفًا</value>
   </data>

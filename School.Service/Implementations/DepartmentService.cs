@@ -34,5 +34,10 @@ public class DepartmentService : IDepartmentService
 
         return department;
     }
+
+    public async Task<bool> IsDepartmentExist(int departmentId)
+    {
+        return await _departmentRepo.GetTableNoTracking().AnyAsync(d => d.DID.Equals(departmentId));
+    }
     #endregion
 }

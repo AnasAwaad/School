@@ -132,6 +132,9 @@
   <data name="Exists" xml:space="preserve">
     <value>is exists before</value>
   </data>
+  <data name="IsNotExists" xml:space="preserve">
+    <value>Is not exists</value>
+  </data>
   <data name="MaxLength20" xml:space="preserve">
     <value>must be in 20 chars</value>
   </data>
