@@ -25,5 +25,7 @@ public static class Router
     {
         public const string Prefix = $"{rule}/User";
         public const string Create = Prefix + "/Create";
+        public const string List = $"{Prefix}/List";
+
     }
 }

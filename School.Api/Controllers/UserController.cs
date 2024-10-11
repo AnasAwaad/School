@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using School.Api.Base;
 using School.Core.Features.Users.Commands.Models;
+using School.Core.Features.Users.Queries.Models;
 using School.Data.AppMetaData;
 
 namespace School.Api.Controllers;
@@ -31,6 +32,14 @@ public class UserController : AppControllerBase
     {
         var response = await _mediator.Send(request);
         return NewResult(response);
+    }
+
+
+    [HttpGet(Router.UserRouting.List)]
+    public async Task<IActionResult> GetUsersPaginatedList([FromQuery] GetUserPaginatedListQuery request)
+    {
+        var response = await _mediator.Send(request);
+        return Ok(response);
     }
     #endregion
 }

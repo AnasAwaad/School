@@ -6,5 +6,6 @@ public partial class UserProfile : Profile
     public UserProfile()
     {
         AddUserMapping();
+        GetUserPaginatedListMapping();
     }
 }

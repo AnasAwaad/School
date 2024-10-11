@@ -36,7 +36,7 @@ public class UserCommandHandler : ResponseHandler, IRequestHandler<AddUserComman
 
         var res = await _userManager.CreateAsync(user, request.Password);
         if (!res.Succeeded)
-            return BadRequest<string>(_localizer[SharedResourcesKeys.FaildToAddUser]);
+            return BadRequest<string>(string.Join(',', res.Errors.Select(e => e.Description)));
 
         return Success("");
     }
