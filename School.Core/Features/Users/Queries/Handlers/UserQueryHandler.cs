@@ -11,7 +11,8 @@ using School.Data.Entities.Identity;
 
 namespace School.Core.Features.Users.Queries.Handlers;
 public class UserQueryHandler : ResponseHandler,
-                              IRequestHandler<GetUserPaginatedListQuery, PaginatedResult<GetUserPaginatedListResponse>>
+                              IRequestHandler<GetUserPaginatedListQuery, PaginatedResult<GetUserPaginatedListResponse>>,
+                              IRequestHandler<GetUserByIdQuery, Response<GetUserByIdResponse>>
 {
     #region Fields
     private readonly UserManager<ApplicationUser> _userManager;
@@ -36,6 +37,18 @@ public class UserQueryHandler : ResponseHandler,
                                     .ToPaginatedListAsync(request.PageNumber, request.PageSize);
 
         return pageinatedUser;
+    }
+
+    public async Task<Response<GetUserByIdResponse>> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
+    {
+        var user = await _userManager.FindByIdAsync(request.Id);
+
+        if (user is null)
+            return NotFound<GetUserByIdResponse>();
+
+        var userMapped = _mapper.Map<GetUserByIdResponse>(user);
+
+        return Success(userMapped);
     }
 
     #endregion

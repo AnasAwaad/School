@@ -41,5 +41,13 @@ public class UserController : AppControllerBase
         var response = await _mediator.Send(request);
         return Ok(response);
     }
+
+    [HttpGet(Router.UserRouting.GetById)]
+    public async Task<IActionResult> GetUser(string id)
+    {
+        var response = await _mediator.Send(new GetUserByIdQuery(id));
+        return NewResult(response);
+    }
+
     #endregion
 }
