@@ -17,10 +17,10 @@ public class AddStudentValidator : AbstractValidator<AddStudentCommand>
     {
         _studentService = studentService;
         _localizer = localizer;
+        _departmentService = departmentService;
 
         ApplyValidationRules();
         ApplyCustomeValidationRules();
-        _departmentService = departmentService;
     }
 
 

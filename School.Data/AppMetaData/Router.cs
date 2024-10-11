@@ -21,4 +21,9 @@ public static class Router
         public const string Prefix = $"{rule}/Department";
         public const string GetById = Prefix;
     }
+    public static class UserRouting
+    {
+        public const string Prefix = $"{rule}/User";
+        public const string Create = Prefix + "/Create";
+    }
 }

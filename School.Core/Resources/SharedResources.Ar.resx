@@ -129,14 +129,23 @@
   <data name="Deleted" xml:space="preserve">
     <value>تم الحذف بنجاح</value>
   </data>
+  <data name="EmailIsExist" xml:space="preserve">
+    <value>هذا الايميل مسجل بالفعل</value>
+  </data>
   <data name="Exists" xml:space="preserve">
     <value>القيمة موجودة مسبقا</value>
+  </data>
+  <data name="FaildToAddUser" xml:space="preserve">
+    <value>حدث خطأ اثناء اضافة المستخدم</value>
   </data>
   <data name="IsNotExists" xml:space="preserve">
     <value>غير موجود</value>
   </data>
   <data name="MaxLength20" xml:space="preserve">
     <value>يجب ألا يزيد طزل النص عن 20 حرفًا</value>
+  </data>
+  <data name="MaxLength50" xml:space="preserve">
+    <value>يجب ألا يزيد طزل النص عن 50 حرفًا</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>الاسم</value>
@@ -146,6 +155,9 @@
   </data>
   <data name="NotFound" xml:space="preserve">
     <value>غير موجود</value>
+  </data>
+  <data name="PassAndConfrimPassNotEqual" xml:space="preserve">
+    <value>كلمة الباسورد المؤكدة لا تطابق كلمة الباسورد</value>
   </data>
   <data name="Required" xml:space="preserve">
     <value>هذا الحقل مطلوب </value>
@@ -161,5 +173,8 @@
   </data>
   <data name="Updated" xml:space="preserve">
     <value>تم التحديث بنجاح</value>
+  </data>
+  <data name="UserNameIsExist" xml:space="preserve">
+    <value>هذا الاسم مسجل بالفعل</value>
   </data>
 </root>

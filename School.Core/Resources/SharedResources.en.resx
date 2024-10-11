@@ -129,14 +129,23 @@
   <data name="Deleted" xml:space="preserve">
     <value>Deleted Successfully</value>
   </data>
+  <data name="EmailIsExist" xml:space="preserve">
+    <value>Email is exists already </value>
+  </data>
   <data name="Exists" xml:space="preserve">
     <value>is exists before</value>
+  </data>
+  <data name="FaildToAddUser" xml:space="preserve">
+    <value>Faild to add user</value>
   </data>
   <data name="IsNotExists" xml:space="preserve">
     <value>Is not exists</value>
   </data>
   <data name="MaxLength20" xml:space="preserve">
     <value>must be in 20 chars</value>
+  </data>
+  <data name="MaxLength50" xml:space="preserve">
+    <value>must be in 50 chars</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
@@ -146,6 +155,9 @@
   </data>
   <data name="NotFound" xml:space="preserve">
     <value>this object is not found</value>
+  </data>
+  <data name="PassAndConfrimPassNotEqual" xml:space="preserve">
+    <value>Password and confrim password not matched</value>
   </data>
   <data name="Required" xml:space="preserve">
     <value>This field is required</value>
@@ -161,5 +173,8 @@
   </data>
   <data name="Updated" xml:space="preserve">
     <value>Updated Successfully</value>
+  </data>
+  <data name="UserNameIsExist" xml:space="preserve">
+    <value>User name is exists already</value>
   </data>
 </root>
