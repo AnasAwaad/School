@@ -21,4 +21,5 @@ public static class SharedResourcesKeys
     public const string UserNameIsExist = "UserNameIsExist";
     public const string PassAndConfrimPassNotEqual = "PassAndConfrimPassNotEqual";
     public const string FaildToAddUser = "FaildToAddUser";
+    public const string ChangedPassword = "ChangedPassword";
 }

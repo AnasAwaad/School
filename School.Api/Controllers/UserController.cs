@@ -63,5 +63,12 @@ public class UserController : AppControllerBase
         return NewResult(response);
     }
 
+    [HttpPut(Router.UserRouting.ChangePassword)]
+    public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordUserCommand request)
+    {
+        var response = await _mediator.Send(request);
+        return NewResult(response);
+    }
+
     #endregion
 }

@@ -10,7 +10,8 @@ using School.Data.Entities.Identity;
 namespace School.Core.Features.Users.Commands.Handlers;
 public class UserCommandHandler : ResponseHandler, IRequestHandler<AddUserCommand, Response<string>>,
                                                    IRequestHandler<EditUserCommand, Response<string>>,
-                                                   IRequestHandler<DeleteUserCommand, Response<string>>
+                                                   IRequestHandler<DeleteUserCommand, Response<string>>,
+                                                   IRequestHandler<ChangePasswordUserCommand, Response<string>>
 {
     private readonly IStringLocalizer<SharedResources> _localizer;
     private readonly UserManager<ApplicationUser> _userManager;
@@ -50,6 +51,12 @@ public class UserCommandHandler : ResponseHandler, IRequestHandler<AddUserComman
         if (user is null)
             return NotFound<string>(_localizer[SharedResourcesKeys.NotFound]);
 
+        var userWithUserName = await _userManager.FindByNameAsync(request.UserName);
+
+        if (userWithUserName is not null && userWithUserName.Id != request.Id)
+            return BadRequest<string>(_localizer[SharedResourcesKeys.UserNameIsExist]);
+
+
         var userUpdated = _mapper.Map(request, user);
 
         var res = await _userManager.UpdateAsync(userUpdated);
@@ -72,5 +79,20 @@ public class UserCommandHandler : ResponseHandler, IRequestHandler<AddUserComman
             return BadRequest<string>(string.Join(',', res.Errors.Select(e => e.Description)));
 
         return Success("", message: _localizer[SharedResourcesKeys.Deleted]);
+    }
+
+    public async Task<Response<string>> Handle(ChangePasswordUserCommand request, CancellationToken cancellationToken)
+    {
+        var user = await _userManager.FindByIdAsync(request.Id);
+
+        if (user is null)
+            return NotFound<string>(_localizer[SharedResourcesKeys.NotFound]);
+
+        var res = await _userManager.ChangePasswordAsync(user, request.OldPassword, request.NewPassword);
+
+        if (!res.Succeeded)
+            return BadRequest<string>(string.Join(',', res.Errors.Select(e => e.Description)));
+
+        return Success("", message: _localizer[SharedResourcesKeys.ChangedPassword]);
     }
 }
