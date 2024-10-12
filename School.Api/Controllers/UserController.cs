@@ -49,5 +49,12 @@ public class UserController : AppControllerBase
         return NewResult(response);
     }
 
+    [HttpPut(Router.UserRouting.Edit)]
+    public async Task<IActionResult> UpdateUser([FromBody] EditUserCommand request)
+    {
+        var response = await _mediator.Send(request);
+        return NewResult(response);
+    }
+
     #endregion
 }

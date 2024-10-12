@@ -8,7 +8,8 @@ using School.Core.Resources;
 using School.Data.Entities.Identity;
 
 namespace School.Core.Features.Users.Commands.Handlers;
-public class UserCommandHandler : ResponseHandler, IRequestHandler<AddUserCommand, Response<string>>
+public class UserCommandHandler : ResponseHandler, IRequestHandler<AddUserCommand, Response<string>>,
+                                                   IRequestHandler<EditUserCommand, Response<string>>
 {
     private readonly IStringLocalizer<SharedResources> _localizer;
     private readonly UserManager<ApplicationUser> _userManager;
@@ -35,6 +36,22 @@ public class UserCommandHandler : ResponseHandler, IRequestHandler<AddUserComman
         var user = _mapper.Map<ApplicationUser>(request);
 
         var res = await _userManager.CreateAsync(user, request.Password);
+        if (!res.Succeeded)
+            return BadRequest<string>(string.Join(',', res.Errors.Select(e => e.Description)));
+
+        return Success("");
+    }
+
+    public async Task<Response<string>> Handle(EditUserCommand request, CancellationToken cancellationToken)
+    {
+        var user = await _userManager.FindByIdAsync(request.Id);
+
+        if (user is null)
+            return NotFound<string>(_localizer[SharedResourcesKeys.NotFound]);
+
+        var userUpdated = _mapper.Map(request, user);
+
+        var res = await _userManager.UpdateAsync(userUpdated);
         if (!res.Succeeded)
             return BadRequest<string>(string.Join(',', res.Errors.Select(e => e.Description)));
 
