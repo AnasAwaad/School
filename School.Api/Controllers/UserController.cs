@@ -56,5 +56,12 @@ public class UserController : AppControllerBase
         return NewResult(response);
     }
 
+    [HttpDelete(Router.UserRouting.Delete)]
+    public async Task<IActionResult> UpdateUser(string id)
+    {
+        var response = await _mediator.Send(new DeleteUserCommand(id));
+        return NewResult(response);
+    }
+
     #endregion
 }

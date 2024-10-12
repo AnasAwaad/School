@@ -4,7 +4,7 @@ using School.Core.Features.Users.Commands.Models;
 using School.Core.Resources;
 
 namespace School.Core.Features.Users.Commands.Validators;
-public class EditUserValidator : AbstractValidator<EditUserCommand>
+public class DeleteUserValidator : AbstractValidator<DeleteUserCommand>
 {
     #region Fields
     private readonly IStringLocalizer<SharedResources> _localizer;
@@ -12,7 +12,7 @@ public class EditUserValidator : AbstractValidator<EditUserCommand>
     #endregion
 
     #region Constructor
-    public EditUserValidator(IStringLocalizer<SharedResources> localizer)
+    public DeleteUserValidator(IStringLocalizer<SharedResources> localizer)
     {
         _localizer = localizer;
 
@@ -30,17 +30,6 @@ public class EditUserValidator : AbstractValidator<EditUserCommand>
         RuleFor(x => x.Id)
             .NotEmpty().WithMessage(_localizer[SharedResourcesKeys.NotEmpty])
             .NotNull().WithMessage(_localizer[SharedResourcesKeys.Required]);
-
-        RuleFor(x => x.FullName)
-            .NotEmpty().WithMessage(_localizer[SharedResourcesKeys.NotEmpty])
-            .NotNull().WithMessage(_localizer[SharedResourcesKeys.Required])
-            .MaximumLength(20).WithMessage(_localizer[SharedResourcesKeys.MaxLength50]);
-
-        RuleFor(x => x.UserName)
-            .NotEmpty().WithMessage(_localizer[SharedResourcesKeys.NotEmpty])
-            .NotNull().WithMessage(_localizer[SharedResourcesKeys.Required])
-            .MaximumLength(20).WithMessage(_localizer[SharedResourcesKeys.MaxLength20]);
-
     }
 
     private void ApplyCustomeValidationRules()

@@ -28,6 +28,7 @@ public static class Router
         public const string GetById = Prefix + "/{id}";
         public const string List = $"{Prefix}/List";
         public const string Edit = Prefix + "/Edit";
+        public const string Delete = Prefix + "/{id}";
 
     }
 }

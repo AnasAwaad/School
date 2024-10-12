@@ -9,7 +9,8 @@ using School.Data.Entities.Identity;
 
 namespace School.Core.Features.Users.Commands.Handlers;
 public class UserCommandHandler : ResponseHandler, IRequestHandler<AddUserCommand, Response<string>>,
-                                                   IRequestHandler<EditUserCommand, Response<string>>
+                                                   IRequestHandler<EditUserCommand, Response<string>>,
+                                                   IRequestHandler<DeleteUserCommand, Response<string>>
 {
     private readonly IStringLocalizer<SharedResources> _localizer;
     private readonly UserManager<ApplicationUser> _userManager;
@@ -55,6 +56,21 @@ public class UserCommandHandler : ResponseHandler, IRequestHandler<AddUserComman
         if (!res.Succeeded)
             return BadRequest<string>(string.Join(',', res.Errors.Select(e => e.Description)));
 
-        return Success("");
+        return Success("", message: _localizer[SharedResourcesKeys.Updated]);
+    }
+
+    public async Task<Response<string>> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
+    {
+        var user = await _userManager.FindByIdAsync(request.Id);
+
+        if (user is null)
+            return NotFound<string>(_localizer[SharedResourcesKeys.NotFound]);
+
+        var res = await _userManager.DeleteAsync(user);
+
+        if (!res.Succeeded)
+            return BadRequest<string>(string.Join(',', res.Errors.Select(e => e.Description)));
+
+        return Success("", message: _localizer[SharedResourcesKeys.Deleted]);
     }
 }
