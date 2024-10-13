@@ -141,6 +141,9 @@
   <data name="FaildToAddUser" xml:space="preserve">
     <value>حدث خطأ اثناء اضافة المستخدم</value>
   </data>
+  <data name="InvalidLoginAttemp" xml:space="preserve">
+    <value>محاولة تسجيل دخول غير صالحة.</value>
+  </data>
   <data name="IsNotExists" xml:space="preserve">
     <value>غير موجود</value>
   </data>
@@ -182,5 +185,8 @@
   </data>
   <data name="UserNameIsExist" xml:space="preserve">
     <value>هذا الاسم مسجل بالفعل</value>
+  </data>
+  <data name="UserNameIsNotExist" xml:space="preserve">
+    <value>اسم المستخدم غير موجود. يرجى التحقق من اسم المستخدم والمحاولة مرة أخرى.</value>
   </data>
 </root>

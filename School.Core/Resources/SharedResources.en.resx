@@ -141,6 +141,9 @@
   <data name="FaildToAddUser" xml:space="preserve">
     <value>Faild to add user</value>
   </data>
+  <data name="InvalidLoginAttemp" xml:space="preserve">
+    <value>Invalid login attempt.</value>
+  </data>
   <data name="IsNotExists" xml:space="preserve">
     <value>Is not exists</value>
   </data>
@@ -179,5 +182,8 @@
   </data>
   <data name="UserNameIsExist" xml:space="preserve">
     <value>User name is exists already</value>
+  </data>
+  <data name="UserNameIsNotExist" xml:space="preserve">
+    <value>Username not found. Please check your username and try again.</value>
   </data>
 </root>
