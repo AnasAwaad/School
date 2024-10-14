@@ -32,4 +32,10 @@ public static class Router
         public const string ChangePassword = Prefix + "/ChangePassword";
 
     }
+
+    public static class AuthenticationRouting
+    {
+        public const string Prefix = $"{rule}/Authentication";
+        public const string SignIn = Prefix + "/SignIn";
+    }
 }

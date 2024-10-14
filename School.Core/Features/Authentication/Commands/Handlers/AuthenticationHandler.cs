@@ -5,6 +5,7 @@ using School.Core.Bases;
 using School.Core.Features.Authentication.Commands.Models;
 using School.Core.Resources;
 using School.Data.Entities.Identity;
+using School.Service.Abstracts;
 
 namespace School.Core.Features.Authentication.Commands.Handlers;
 public class AuthenticationHandler : ResponseHandler,
@@ -15,15 +16,17 @@ public class AuthenticationHandler : ResponseHandler,
     private readonly IStringLocalizer<SharedResources> _localizer;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly SignInManager<ApplicationUser> _signInManager;
+    private readonly IAuthenticationService _authenticationService;
     #endregion
 
 
     #region Constructor
-    public AuthenticationHandler(IStringLocalizer<SharedResources> localizer, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager) : base(localizer)
+    public AuthenticationHandler(IStringLocalizer<SharedResources> localizer, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IAuthenticationService authenticationService) : base(localizer)
     {
         _localizer = localizer;
         _userManager = userManager;
         _signInManager = signInManager;
+        _authenticationService = authenticationService;
     }
 
     #endregion
@@ -47,8 +50,9 @@ public class AuthenticationHandler : ResponseHandler,
 
 
         //generate token
+        var token = _authenticationService.GetJWTToken(user);
 
-        return Success("");
+        return Success(token);
     }
 
     #endregion

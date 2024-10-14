@@ -33,7 +33,7 @@ public class Program
         #region Dependency Injections
 
         builder.Services
-            .AddInfrastructureDependencies()
+            .AddInfrastructureDependencies(builder.Configuration)
             .AddServiceDependencies()
             .AddCoreDependencies();
 

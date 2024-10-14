@@ -1,5 +1,6 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using School.Data.Entities.Identity;
+using School.Data.Helper;
 using School.Service.Abstracts;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -9,9 +10,16 @@ namespace School.Service.Implementations;
 public class AuthenticationService : IAuthenticationService
 {
     #region Fields
+    private readonly JwtSettings jwtSettings;
+
+
     #endregion
 
     #region Constructor
+    public AuthenticationService(JwtSettings jwtSettings)
+    {
+        this.jwtSettings = jwtSettings;
+    }
     #endregion
 
     #region Handle Functions
@@ -27,13 +35,13 @@ public class AuthenticationService : IAuthenticationService
             new Claim(ClaimTypes.Role,"") // add role here
         };
 
-        var symatricKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("afldkflksanfjn3424235@$@$@slkfsdfl"));
+        var symatricKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret));
 
         var signingCredentials = new SigningCredentials(symatricKey, SecurityAlgorithms.HmacSha256);
 
         var securityToken = new JwtSecurityToken(
-                issuer: "http://localhost:5127/",
-                audience: "http://localhost:4200/",
+                issuer: jwtSettings.Issuer,
+                audience: jwtSettings.Audience,
                 expires: DateTime.Now.AddHours(1),
                 claims: userClaims,
                 signingCredentials: signingCredentials
