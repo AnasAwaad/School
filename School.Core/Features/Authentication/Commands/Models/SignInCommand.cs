@@ -1,13 +1,9 @@
 ﻿using MediatR;
 using School.Core.Bases;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using School.Data.Helper;
 
 namespace School.Core.Features.Authentication.Commands.Models;
-public class SignInCommand:IRequest<Response<string>>
+public class SignInCommand : IRequest<Response<JwtAuthResponse>>
 {
     public string UserName { get; set; } = null!;
     public string Password { get; set; } = null!;

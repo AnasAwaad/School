@@ -1,7 +1,8 @@
 ﻿using School.Data.Entities.Identity;
+using School.Data.Helper;
 
 namespace School.Service.Abstracts;
 public interface IAuthenticationService
 {
-    string GetJWTToken(ApplicationUser user);
+    JwtAuthResponse GetJWTToken(ApplicationUser user);
 }

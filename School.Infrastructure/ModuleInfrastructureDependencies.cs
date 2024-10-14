@@ -50,13 +50,13 @@ public static class ModuleInfrastructureDependencies
             x.SaveToken = true;
             x.TokenValidationParameters = new TokenValidationParameters
             {
-                ValidateIssuer = jwtSettings.validateIssuer,
+                ValidateIssuer = jwtSettings.ValidateIssuer,
                 ValidIssuers = new[] { jwtSettings.Issuer },
-                ValidateIssuerSigningKey = jwtSettings.validateIssuerSigningKey,
+                ValidateIssuerSigningKey = jwtSettings.ValidateIssuerSigningKey,
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSettings.Secret)),
                 ValidAudience = jwtSettings.Audience,
-                ValidateAudience = jwtSettings.validateAudience,
-                ValidateLifetime = jwtSettings.validateLifetime,
+                ValidateAudience = jwtSettings.ValidateAudience,
+                ValidateLifetime = jwtSettings.ValidateLifetime,
             };
         });
 
