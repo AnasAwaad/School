@@ -6,4 +6,5 @@ public interface IAuthenticationService
 {
     Task<JwtAuthResponse> GetJWTTokenAsync(ApplicationUser user);
     Task<JwtAuthResponse> GetRefreshTokenAsync(string accessToken, string refreshToken);
+    Task<string> ValidateTokenAsync(string accessToken);
 }

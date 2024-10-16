@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using School.Api.Base;
 using School.Core.Features.Authentication.Commands.Models;
+using School.Core.Features.Authentication.Queries.Models;
 using School.Data.AppMetaData;
 
 namespace School.Api.Controllers;
@@ -25,6 +26,13 @@ public class AuthenticationController : AppControllerBase
 
     [HttpPost(Router.AuthenticationRouting.RefreshToken)]
     public async Task<IActionResult> RefreshToken([FromQuery] RefreshTokenCommand request)
+    {
+        var res = await _madiator.Send(request);
+        return NewResult(res);
+    }
+
+    [HttpGet(Router.AuthenticationRouting.ValidateToken)]
+    public async Task<IActionResult> ValidateToken([FromQuery] ValidateTokenQuery request)
     {
         var res = await _madiator.Send(request);
         return NewResult(res);

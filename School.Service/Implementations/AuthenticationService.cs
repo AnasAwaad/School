@@ -10,7 +10,6 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace School.Service.Implementations;
 public class AuthenticationService : IAuthenticationService
 {
     #region Fields
@@ -32,7 +31,6 @@ public class AuthenticationService : IAuthenticationService
     #region Handle Functions
     public async Task<JwtAuthResponse> GetJWTTokenAsync(ApplicationUser user)
     {
-
         var (securityToken, accessToken) = GenerateAccessToken(user);
 
         // generate refresh token
@@ -46,13 +44,11 @@ public class AuthenticationService : IAuthenticationService
             JwtId = securityToken.Id,
             IsUsed = false,
             IsRevoked = false,
-            AddedTime = DateTime.Now,
-            ExpireDate = DateTime.Now.AddDays(jwtSettings.RefreshTokenExpireDate)
+            AddedTime = DateTime.UtcNow,
+            ExpireDate = DateTime.UtcNow.AddDays(jwtSettings.RefreshTokenExpireDate)
         };
 
         await _userRefreshTokenRepository.AddAsync(userRefreshToken);
-
-
 
         return new JwtAuthResponse
         {
@@ -66,14 +62,12 @@ public class AuthenticationService : IAuthenticationService
         // decode jwt token
         var jwtToken = new JwtSecurityTokenHandler().ReadJwtToken(accessToken);
 
-
         // validate access token
         if (jwtToken is null || !jwtToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256))
             throw new SecurityTokenException("Algorithm is not valid");
 
-        if (jwtToken.ValidTo > DateTime.Now)
+        if (jwtToken.ValidTo > DateTime.UtcNow)
             throw new SecurityTokenException("token is not expired");
-
 
         // get user refresh token
         var userId = jwtToken.Claims.FirstOrDefault(c => c.Type.Equals(ClaimTypes.NameIdentifier))?.Value;
@@ -87,8 +81,7 @@ public class AuthenticationService : IAuthenticationService
         if (userRefreshToken is null)
             throw new SecurityTokenException("refresh token is not found");
 
-
-        if (userRefreshToken.ExpireDate < DateTime.Now)
+        if (userRefreshToken.ExpireDate < DateTime.UtcNow)
         {
             userRefreshToken.IsRevoked = true;
             userRefreshToken.IsUsed = false;
@@ -99,7 +92,6 @@ public class AuthenticationService : IAuthenticationService
 
         if (userRefreshToken.User is null)
             throw new SecurityTokenException("user is not found");
-
 
         // generate accessToken
         var (securityToken, newAccesstoken) = GenerateAccessToken(userRefreshToken.User);
@@ -118,16 +110,46 @@ public class AuthenticationService : IAuthenticationService
         };
     }
 
+    public async Task<string> ValidateTokenAsync(string accessToken)
+    {
+        var handler = new JwtSecurityTokenHandler();
+
+        var parameters = new TokenValidationParameters
+        {
+            ValidateIssuer = jwtSettings.ValidateIssuer,
+            ValidIssuers = new[] { jwtSettings.Issuer },
+            ValidateIssuerSigningKey = jwtSettings.ValidateIssuerSigningKey,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSettings.Secret)),
+            ValidAudience = jwtSettings.Audience,
+            ValidateAudience = jwtSettings.ValidateAudience,
+            ValidateLifetime = jwtSettings.ValidateLifetime,
+            ClockSkew = TimeSpan.Zero
+        };
+
+        var validator = handler.ValidateToken(accessToken, parameters, out SecurityToken validatedToken);
+        try
+        {
+            if (validator is null)
+                throw new SecurityTokenException("Invalid token");
+            return "Not expired";
+        }
+        catch (Exception ex)
+        {
+            return ex.Message;
+        }
+    }
+
     private (JwtSecurityToken, string) GenerateAccessToken(ApplicationUser user)
     {
         var symatricKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret));
 
         var signingCredentials = new SigningCredentials(symatricKey, SecurityAlgorithms.HmacSha256);
 
+        var expires = DateTime.UtcNow.AddMinutes(jwtSettings.AccessTokenExpireDate);
         var securityToken = new JwtSecurityToken(
                 issuer: jwtSettings.Issuer,
                 audience: jwtSettings.Audience,
-                expires: DateTime.Now.AddDays(jwtSettings.AccessTokenExpireDate),
+                expires: DateTime.UtcNow.AddMinutes(jwtSettings.AccessTokenExpireDate),
                 claims: GetUserClaims(user),
                 signingCredentials: signingCredentials
             );
@@ -151,16 +173,12 @@ public class AuthenticationService : IAuthenticationService
 
     private string GenerateRefreshToken()
     {
-        // Create a byte array to hold the random data
         var randomNumber = new byte[32];
-
-        // Fill the array with random values
         using (var rng = RandomNumberGenerator.Create())
         {
             rng.GetBytes(randomNumber);
         }
 
-        // Convert the byte array to a Base64 string for easy storage and transmission
         return Convert.ToBase64String(randomNumber);
     }
 
@@ -168,14 +186,12 @@ public class AuthenticationService : IAuthenticationService
     {
         var refreshToken = new RefreshTokenResponse
         {
-            ExpiredAt = DateTime.Now.AddDays(jwtSettings.RefreshTokenExpireDate),
+            ExpiredAt = DateTime.UtcNow.AddDays(jwtSettings.RefreshTokenExpireDate),
             UserName = userName,
             RefreshToken = GenerateRefreshToken()
         };
 
-
         return refreshToken;
     }
     #endregion
-
 }

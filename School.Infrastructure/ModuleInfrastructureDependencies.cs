@@ -58,6 +58,7 @@ public static class ModuleInfrastructureDependencies
                 ValidAudience = jwtSettings.Audience,
                 ValidateAudience = jwtSettings.ValidateAudience,
                 ValidateLifetime = jwtSettings.ValidateLifetime,
+                ClockSkew = TimeSpan.Zero
             };
         });
 

@@ -21,7 +21,7 @@
 
   <ItemGroup>
     <Folder Include="Features\Authentication\Commands\Results\" />
-    <Folder Include="Features\Authentication\Queries\" />
+    <Folder Include="Features\Authentication\Queries\Results\" />
     <Folder Include="Features\Departments\Commands\" />
     <Folder Include="Mapping\Departments\CommandMapping\" />
   </ItemGroup>
