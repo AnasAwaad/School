@@ -51,7 +51,7 @@ public class AuthenticationHandler : ResponseHandler,
 
 
         //generate token
-        var tokenResult = _authenticationService.GetJWTToken(user);
+        var tokenResult = await _authenticationService.GetJWTTokenAsync(user);
 
 
 

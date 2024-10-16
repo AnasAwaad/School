@@ -4,5 +4,5 @@ using School.Data.Helper;
 namespace School.Service.Abstracts;
 public interface IAuthenticationService
 {
-    JwtAuthResponse GetJWTToken(ApplicationUser user);
+    Task<JwtAuthResponse> GetJWTTokenAsync(ApplicationUser user);
 }
