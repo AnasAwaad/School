@@ -10,7 +10,8 @@ using School.Service.Abstracts;
 
 namespace School.Core.Features.Authentication.Commands.Handlers;
 public class AuthenticationHandler : ResponseHandler,
-                                     IRequestHandler<SignInCommand, Response<JwtAuthResponse>>
+                                     IRequestHandler<SignInCommand, Response<JwtAuthResponse>>,
+                                     IRequestHandler<RefreshTokenCommand, Response<JwtAuthResponse>>
 {
 
     #region Fields
@@ -56,6 +57,12 @@ public class AuthenticationHandler : ResponseHandler,
 
 
         return Success(tokenResult);
+    }
+
+    public async Task<Response<JwtAuthResponse>> Handle(RefreshTokenCommand request, CancellationToken cancellationToken)
+    {
+        var refreshTokenResult = await _authenticationService.GetRefreshTokenAsync(request.AccessToken, request.RefreshToken);
+        return Success(refreshTokenResult);
     }
 
     #endregion

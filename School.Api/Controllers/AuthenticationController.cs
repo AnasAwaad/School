@@ -21,4 +21,12 @@ public class AuthenticationController : AppControllerBase
         var res = await _madiator.Send(request);
         return NewResult(res);
     }
+
+
+    [HttpPost(Router.AuthenticationRouting.RefreshToken)]
+    public async Task<IActionResult> RefreshToken([FromQuery] RefreshTokenCommand request)
+    {
+        var res = await _madiator.Send(request);
+        return NewResult(res);
+    }
 }

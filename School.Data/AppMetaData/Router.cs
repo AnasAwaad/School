@@ -37,5 +37,6 @@ public static class Router
     {
         public const string Prefix = $"{rule}/Authentication";
         public const string SignIn = Prefix + "/SignIn";
+        public const string RefreshToken = Prefix + "/Refresh-Token";
     }
 }
